@@ -1,3 +1,25 @@
+<!-- <?php
+
+// Get form data
+$name = $_POST['name'];
+$email = $_POST['email'];
+$message = $_POST['message'];
+
+// Insert into table
+$sql = "INSERT INTO messages (name, email, message) VALUES ('$name', '$email', '$message')";
+
+if ($conn->query($sql) === TRUE) {
+  // Redirect to success page
+  header("Location: success.html");
+  exit();
+} else {
+  echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
+$conn->close();
+?>
+?> -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
