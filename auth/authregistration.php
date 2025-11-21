@@ -35,11 +35,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = test_input($_POST["email"]);
     }
 
+    
+
+
+
     if (empty($_POST["role"])) {
-        $_roleErr = "Role is required";
-    } else {
-        $role = test_input($_POST["role"]);
+    $_roleErr = "Role is required";
+} else {
+    $role = test_input($_POST["role"]);
+
+    // ✅ Validate role
+    $valid_roles = ['farmer', 'buyer'];
+    if (!in_array(strtolower($role), $valid_roles)) {
+        die("Invalid role selected!");
     }
+
+    // Convert role to lowercase to standardize
+    $role = strtolower($role);
+}
 
     if (empty($_POST["password"])) {
         $_passwordErr = "Password is required";
