@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 // Include database connection
 include '../conn/conn.php';
 
@@ -29,13 +30,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $phone = test_input($_POST["phone"]);
     }
 
+    if (!filter_var($phone, FILTER_VALIDATE_INT)) {
+        $_phoneErr = "Invalid phone number format";
+    }
+
     if (empty($_POST["email"])) {
         $_emailErr = "Email is required";
     } else {
         $email = test_input($_POST["email"]);
     }
 
-    
+
 
 
 
@@ -44,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     $role = test_input($_POST["role"]);
 
-    // ✅ Validate role
+   
     $valid_roles = ['farmer', 'buyer'];
     if (!in_array(strtolower($role), $valid_roles)) {
         die("Invalid role selected!");
@@ -80,6 +85,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sssss", $name, $email, $phone, $role, $hashed_password);
 
         if ($stmt->execute()) {
+               $new_user_id = $conn->insert_id;
+
+     
+       $_SESSION['user_id'] = $new_user_id;
+       $_SESSION['user_name'] = $name;
 
             if($role === 'farmer'){
                 header("Location: ../farmerdashboard.php");
