@@ -23,7 +23,7 @@ $_nameErr= $_emailErr=  $_phoneErr=$_roleErr=$_passwordErr=$_confirm_passwordErr
   <section class="register-section py-5 mt-5">
     <div class="container">
       <h2 class="text-center fw-bold mb-4">Register as a Farmer or Buyer</h2>
-      <form class="card p-4 mx-auto shadow" style="max-width: 600px;" method="POST" action="auth/authregistration.php">
+      <form class="card p-4 mx-auto shadow" style="max-width: 600px;" method="POST" action="auth/authregistration.php" id="form">
         <div class="mb-3">
           <label for="name" class="form-label">Full Name</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="John Leo" required>
@@ -67,7 +67,7 @@ $_nameErr= $_emailErr=  $_phoneErr=$_roleErr=$_passwordErr=$_confirm_passwordErr
   <footer class="bg-success text-white text-center py-3 mt-5">
     <p class="mb-0">© 2025 AgroConnect | Built with Ayo❤️ for Farmers</p>
   </footer>
-
+<script src="script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
