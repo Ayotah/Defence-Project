@@ -109,7 +109,7 @@ session_start();
   <!-- Dashboard Header -->
   <section class="dashboard-header">
     <div class="container">
-      <h2>Welcome, Farmer!</h2>
+      <h2>Welcome, Farmer <?php echo htmlspecialchars($_SESSION["name"]); ?></h2>
       <p>Add your produce to start selling directly to buyers.</p>
     </div>
   </section>
