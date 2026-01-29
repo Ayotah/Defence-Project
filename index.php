@@ -60,6 +60,7 @@
     .hero img {
       max-width: 100%;
       border-radius: 20px;
+      animation: float 6s ease-in-out infinite;
     }
 
     /* ================= WHY US ================= */
@@ -73,13 +74,19 @@
       border-radius: 20px;
       padding: 40px 25px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      transition: all 0.3s ease;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
       height: 100%;
+      animation: float 5s ease-in-out infinite;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
 
+    .col-md-4:nth-child(1) .why-card { animation-delay: 0s; }
+    .col-md-4:nth-child(2) .why-card { animation-delay: 1s; }
+    .col-md-4:nth-child(3) .why-card { animation-delay: 2s; }
+
     .why-card:hover {
-      transform: translateY(-8px);
+      transform: translateY(-18px) scale(1.03);
+      box-shadow: 0 25px 60px rgba(40, 167, 69, 0.25);
     }
 
     .why-icon {
@@ -103,6 +110,13 @@
     .why-card p {
       color: #666;
       font-size: 0.95rem;
+    }
+
+    /* ================= FLOAT KEYFRAMES ================= */
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+      100% { transform: translateY(0); }
     }
 
     /* ================= FOOTER ================= */
@@ -135,7 +149,7 @@
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-          <!-- <li class="nav-item"><a class="nav-link" href="products.php">Products</a></li> -->
+          <!-- <li class="nav-item"><a class="nav-link" href="#">Products</a></li> -->
           <li class="nav-item"><a class="nav-link" href="registration.php">Register</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
         </ul>
@@ -143,7 +157,7 @@
     </div>
   </nav>
 
-  <!-- ================= HERO SECTION ================= -->
+  <!-- ================= HERO ================= -->
   <section class="hero">
     <div class="container">
       <div class="row align-items-center">
