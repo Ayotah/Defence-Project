@@ -1,109 +1,93 @@
 <?php
 session_start();
+require('../conn/conn.php');
 
-
-// Include database connection
-include '../conn/conn.php';
-
-$name=$email=$phone=$role=$password=$confirm_password ="";
-$_nameErr= $_emailErr=  $_phoneErr=$_roleErr=$_passwordErr=$_confirm_passwordErr= "";
-
-// Function to sanitize
-function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header("Location: ../register.php");
+    exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  
-    if (empty($_POST["name"])) {
-        $_nameErr = "Name is required";
-    } else {
-        $name = test_input($_POST["name"]);
-    }
+/* =======================
+   GET & SANITIZE INPUTS
+======================= */
+$name     = trim($_POST['name'] ?? '');
+$phone    = trim($_POST['phone'] ?? '');
+$email    = trim($_POST['email'] ?? '');
+$role     = $_POST['role'] ?? '';
+$password = $_POST['password'] ?? '';
+$confirm  = $_POST['confirm_password'] ?? '';
 
-    if (empty($_POST["phone"])) {
-        $_phoneErr = "Phone number is required";
-    } else {
-        $phone = test_input($_POST["phone"]);
-    }
+/* =======================
+   BASIC VALIDATION
+======================= */
+if ($name === '' || $phone === '' || $email === '' || $role === '' || $password === '') {
+    die("All fields are required.");
+}
 
-    if (!filter_var($phone, FILTER_VALIDATE_INT)) {
-        $_phoneErr = "Invalid phone number format";
-    }
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    die("Invalid email address.");
+}
 
-    if (empty($_POST["email"])) {
-        $_emailErr = "Email is required";
-    } else {
-        $email = test_input($_POST["email"]);
-    }
+if ($password !== $confirm) {
+    die("Passwords do not match.");
+}
 
+if (strlen($password) < 6) {
+    die("Password must be at least 6 characters.");
+}
 
+/* =======================
+   CHECK DUPLICATE EMAIL
+======================= */
+$check = $conn->prepare("SELECT id FROM users WHERE email = ?");
+$check->bind_param("s", $email);
+$check->execute();
+$check->store_result();
 
+if ($check->num_rows > 0) {
+    die("Email already registered.");
+}
+$check->close();
 
+/* =======================
+   HASH PASSWORD
 
-    if (empty($_POST["role"])) {
-    $_roleErr = "Role is required";
+======================= */
+$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+/* =======================
+   INSERT USER
+======================= */
+$stmt = $conn->prepare(
+    "INSERT INTO user1 (name, phone, email, role, password)
+     VALUES (?, ?, ?, ?, ?)"
+);
+
+$stmt->bind_param("sssss", $name, $phone, $email, $role, $hashedPassword);
+
+if (!$stmt->execute()) {
+    die("Registration failed. Try again.");
+}
+
+$user_id = $stmt->insert_id;
+$stmt->close();
+
+/* =======================
+   CREATE SESSION
+======================= */
+$_SESSION['user_id'] = $user_id;
+$_SESSION['name']    = $name;
+$_SESSION['email']   = $email;
+$_SESSION['role']    = $role;
+
+/* =======================
+   REDIRECT BY ROLE
+======================= */
+if ($role === 'farmer') {
+    header("Location: ../farmerdashboard.php");
 } else {
-    $role = test_input($_POST["role"]);
-
-   
-    $valid_roles = ['farmer', 'buyer'];
-    if (!in_array(strtolower($role), $valid_roles)) {
-        die("Invalid role selected!");
-    }
-
-    // Convert role to lowercase to standardize
-    $role = strtolower($role);
+    header("Location: ../products.php");
 }
+exit;
 
-    if (empty($_POST["password"])) {
-        $_passwordErr = "Password is required";
-    } else {
-        $password = test_input($_POST["password"]);
-    }
-
-    if (empty($_POST["confirm_password"])) {
-        $_confirm_passwordErr = "Confirm Password is required";
-    } else {
-        $confirm_password = test_input($_POST["confirm_password"]);
-    }
-
-
-    if ($password !== $confirm_password) {
-        $_confirm_passwordErr = "Passwords do not match";
-    } 
-    else {
-
-        // Hash the password
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-        // Prepare insert
-        $stmt = $conn->prepare("INSERT INTO user2 (name, email, phone, role, password) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $name, $email, $phone, $role, $hashed_password);
-
-        if ($stmt->execute()) {
-               $new_user_id = $conn->insert_id;
-
-     
-       $_SESSION['user_id'] = $new_user_id;
-       $_SESSION['user_name'] = $name;
-
-            if($role === 'farmer'){
-                header("Location: ../farmerdashboard.php");
-                exit();
-            } else {
-                header("Location: ../products.php");
-                exit();
-            }
-
-        } else {
-            echo "Error: " . $stmt->error;  
-        }
-
-        $conn->close();
-    }
-}
 ?>

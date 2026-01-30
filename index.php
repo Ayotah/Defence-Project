@@ -76,13 +76,8 @@
       text-align: center;
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
       height: 100%;
-      animation: float 5s ease-in-out infinite;
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
-
-    .col-md-4:nth-child(1) .why-card { animation-delay: 0s; }
-    .col-md-4:nth-child(2) .why-card { animation-delay: 1s; }
-    .col-md-4:nth-child(3) .why-card { animation-delay: 2s; }
 
     .why-card:hover {
       transform: translateY(-18px) scale(1.03);
@@ -112,11 +107,28 @@
       font-size: 0.95rem;
     }
 
-    /* ================= FLOAT KEYFRAMES ================= */
+    /* ================= FLOAT ANIMATION ================= */
     @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
-      100% { transform: translateY(0); }
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    /* ================= MOBILE FIXES ================= */
+    @media (max-width: 576px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
     }
 
     /* ================= FOOTER ================= */
@@ -148,10 +160,15 @@
 
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-          <!-- <li class="nav-item"><a class="nav-link" href="#">Products</a></li> -->
-          <li class="nav-item"><a class="nav-link" href="registration.php">Register</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="registration.php">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.php">Contact</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -160,22 +177,29 @@
   <!-- ================= HERO ================= -->
   <section class="hero">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-6">
+      <div class="row align-items-center gy-5">
+
+        <!-- TEXT -->
+        <div class="col-md-6 text-center text-md-start">
           <h1>Connecting Farmers and Buyers Directly</h1>
           <p>
             AgroConnect empowers farmers by giving them direct access to buyers,
             ensuring better prices and fresher produce.
           </p>
-          <a href="#" class="btn btn-success btn-lg">Get Started</a>
+          <a href="registration.php" class="btn btn-success mt-3">
+            Get Started
+          </a>
         </div>
 
+        <!-- IMAGE -->
         <div class="col-md-6 text-center">
           <img
             src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae"
             alt="Agriculture"
+            class="img-fluid"
           />
         </div>
+
       </div>
     </div>
   </section>

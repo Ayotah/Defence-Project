@@ -96,16 +96,15 @@ session_start();
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.html">AgroConnect</a>
+      <a class="navbar-brand" href="index.php">AgroConnect</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link active" href="#">Products</a></li>
-          <li class="nav-item"><a class="nav-link" href="registration.html">Register</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="registration.php">Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -125,7 +124,7 @@ session_start();
               <h5 class="card-title">Fresh Corn</h5>
               <p class="card-text">$20 / Bag</p>
               <p>Farmer: John Doe</p>
-              <button class="btn-contact">Contact Farmer</button>
+              <a href="farminfo.php" class="btn-contact">Contact Farmer</a>
             </div>
           </div>
         </div>
@@ -138,7 +137,7 @@ session_start();
               <h5 class="card-title">Tomatoes</h5>
               <p class="card-text">$15 / Basket</p>
               <p>Farmer: Amina Bello</p>
-              <button class="btn-contact">Contact Farmer</button>
+              <a href="farminfo.php" class="btn-contact">Contact Farmer</a>
             </div>
           </div>
         </div>
@@ -151,7 +150,7 @@ session_start();
               <h5 class="card-title">Yams</h5>
               <p class="card-text">$25 / Tuber</p>
               <p>Farmer: Paul N.</p>
-              <button class="btn-contact">Contact Farmer</button>
+              <a href="farminfo.php" class="btn-contact">Contact Farmer</a>
             </div>
           </div>
         </div>
@@ -164,7 +163,7 @@ session_start();
               <h5 class="card-title">Carrots</h5>
               <p class="card-text">$10 / Kg</p>
               <p>Farmer: Mary Johnson</p>
-              <button class="btn-contact">Contact Farmer</button>
+              <a href="farminfo.php" class="btn-contact">Contact Farmer</a>
             </div>
           </div>
         </div>
@@ -177,7 +176,7 @@ session_start();
               <h5 class="card-title">Bell Peppers</h5>
               <p class="card-text">$12 / Kg</p>
               <p>Farmer: Samuel K.</p>
-              <button class="btn-contact">Contact Farmer</button>
+              <a href="farminfo.php" class="btn-contact">Contact Farmer</a>
             </div>
           </div>
         </div>
@@ -190,7 +189,7 @@ session_start();
               <h5 class="card-title">Spinach</h5>
               <p class="card-text">$8 / Bunch</p>
               <p>Farmer: Grace O.</p>
-              <button class="btn-contact">Contact Farmer</button>
+              <a href="farminfo.php" class="btn-contact">Contact Farmer</a>
             </div>
           </div>
         </div>
@@ -203,7 +202,7 @@ session_start();
               <h5 class="card-title">Potatoes</h5>
               <p class="card-text">$18 / Bag</p>
               <p>Farmer: David L.</p>
-              <button class="btn-contact">Contact Farmer</button>
+              <a href="farminfo.php" class="btn-contact">Contact Farmer</a>
             </div>
           </div>
         </div>
@@ -216,7 +215,7 @@ session_start();
               <h5 class="card-title">Onions</h5>
               <p class="card-text">$14 / Bag</p>
               <p>Farmer: Fatima S.</p>
-              <button class="btn-contact">Contact Farmer</button>
+              <a href="farminfo.php" class="btn-contact">Contact Farmer</a>
             </div>
           </div>
         </div>

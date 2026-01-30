@@ -1,3 +1,6 @@
+<?php
+require('../conn/conn.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,7 +45,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Home</a>
+      <a class="navbar-brand" href="index.php">Home</a>
     </div>
   </nav>
 

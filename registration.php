@@ -69,7 +69,7 @@ $_nameErr= $_emailErr=  $_phoneErr=$_roleErr=$_passwordErr=$_confirm_passwordErr
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="index.html">AgroConnect</a>
+    <a class="navbar-brand fw-bold" href="index.php">AgroConnect</a>
   </div>
 </nav>
 

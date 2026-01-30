@@ -1,15 +1,28 @@
 <?php
+require('../conn/conn.php');
 session_start();
 
-// If the user is not logged in, redirect to login page
-if (!isset($_SESSION["name"])) {
-    $_SESSION["name"] = "Farmer"; // fallback if session not set
-    // Optional: you can redirect to login page
-     header("Location: registration.html");
+/* =======================
+   PROTECT PAGE
+======================= */
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../registration.php");
     exit;
 }
-$name = htmlspecialchars($_SESSION["name"]); // safe output
 
+/* =======================
+   ALLOW FARMERS ONLY
+======================= */
+if ($_SESSION['role'] !== 'farmer') {
+    header("Location: ../products.php");
+    exit;
+}
+
+/* =======================
+   SESSION DATA
+======================= */
+$name      = htmlspecialchars($_SESSION['name']);
+$farmer_id = $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,16 +58,16 @@ $name = htmlspecialchars($_SESSION["name"]); // safe output
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
   <div class="container">
-    <a class="navbar-brand" href="index.html">AgroConnect</a>
+    <a class="navbar-brand" href="index.php">AgroConnect</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navMenu">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
-        <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="registration.php">Register</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
+       
       </ul>
     </div>
   </div>
@@ -88,8 +101,6 @@ $name = htmlspecialchars($_SESSION["name"]); // safe output
         <label for="image" class="form-label">Product Image</label>
         <input type="file" class="form-control" id="image" name="image" required>
       </div>
-      <!-- Hidden field for farmer ID -->
-      <input type="hidden" name="farmer_id" value="1">
       <button type="submit" class="btn w-100">Add Product</button>
     </form>
   </div>
