@@ -1,16 +1,26 @@
 <!-- <?php
-
+require('../conn/conn.php');
 // Get form data
-$name = $_POST['name'];
-$email = $_POST['email'];
-$message = $_POST['message'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$name     = trim($_POST['name'] ?? '');
+$email    = trim($_POST['email'] ?? '');
+$message  = trim($_POST['message'] ?? '');
+
+}
+if (empty($name) || empty($email) || empty($message)) {
+  die("All fields are required.");
+}
+
+  
 
 // Insert into table
-$sql = "INSERT INTO messages (name, email, message) VALUES ('$name', '$email', '$message')";
+$sql = "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("sss", $name, $email, $message);
 
-if ($conn->query($sql) === TRUE) {
+if ($stmt->execute() === TRUE) {
   // Redirect to success page
-  header("Location: success.html");
+  header("Location: success.php");
   exit();
 } else {
   echo "Error: " . $sql . "<br>" . $conn->error;
@@ -98,16 +108,16 @@ $conn->close();
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.html">AgroConnect</a>
+      <a class="navbar-brand" href="index.php">AgroConnect</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
-          <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
-          <li class="nav-item"><a class="nav-link active" href="./contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.php">Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
+          <li class="nav-item"><a class="nav-link active" href="./contact.php">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -130,7 +140,7 @@ $conn->close();
           <label for="message" class="form-label">Message</label>
           <textarea name="message" id="message" class="form-control" rows="5" placeholder="Type your message here" required></textarea>
         </div>
-        <button type="submit">Send Message</button>
+        <button type="submit" class="btn btn-success">Send Message</button>
       </form>
     </div>
   </section>
